@@ -1,0 +1,3 @@
+ & D:/Installations/Anaconda/envs/sad/python.exe inference.py --driven_audio examples/driven_audio/RD_Radio40_000.wav --source_image examples/source_image/art_2.png --result_dir results
+ & D:/Installations/Anaconda/envs/sad/python.exe inference.py --driven_audio examples/driven_audio/RD_Radio40_000.wav --source_image examples/source_image/art_2.png --result_dir results --size 512 --enhancer gfpgan
+            

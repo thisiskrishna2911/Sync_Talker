@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SadTalker Web UI</title>
+</head>
+<body>
+    <h1>SadTalker - Make Your Image Talk</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Upload Image:</label>
+        <input type="file" name="image" accept="image/*" required><br><br>
+
+        <label>Upload Audio:</label>
+        <input type="file" name="audio" accept="audio/*" required><br><br>
+
+        <label>Select resolution</label>
+        <input type="radio" name="res" value="256">
+        <label for="256">256</label>
+        <input type="radio" name="res" value="512"> 
+        <label for="512">512</label><br><br>
+    
+        <button type="submit">Generate Talking Video</button>
+
+
+    </form>
+</body>
+</html>
