@@ -1,26 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SadTalker Web UI</title>
+    <!-- Link to the CSS file in the static/css folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <h1>SadTalker - Make Your Image Talk</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <label>Upload Image:</label>
-        <input type="file" name="image" accept="image/*" required><br><br>
+    <div class="container">
+        <h1>SadTalker - Make Your Image Talk</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
 
-        <label>Upload Audio:</label>
-        <input type="file" name="audio" accept="audio/*" required><br><br>
+            <label for="audio">Upload Audio:</label>
+            <input type="file" id="audio" name="audio" accept="audio/*" required>
 
-        <label>Select resolution</label>
-        <input type="radio" name="res" value="256">
-        <label for="256">256</label>
-        <input type="radio" name="res" value="512"> 
-        <label for="512">512</label><br><br>
-    
-        <button type="submit">Generate Talking Video</button>
+            <div class="radio-container">
+                <label>Select resolution</label>
+                <div class="radio-group">
+                    <input type="radio" id="res256" name="res" value="256" checked>
+                    <label for="res256">256</label>
+                    <input type="radio" id="res512" name="res" value="512">
+                    <label for="res512">512</label>
+                </div>
+            </div>
 
-
-    </form>
+            <button type="submit">Generate Talking Video</button>
+        </form>
+    </div>
+    <!-- Link to the JavaScript file in the static/js folder -->
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
+

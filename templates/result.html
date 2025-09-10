@@ -1,16 +1,32 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Result</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        video { border: 2px solid #ccc; border-radius: 8px; max-width: 90%; }
+        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Generated Video</h1>
-    <video controls autoplay>
+    <h1>Your Talking Video is Ready!</h1>
+    
+    <!--
+      The URL is now simpler, using only the 'filename'.
+    -->
+    <video controls width="640">
+        <!-- We use the same 'download_file' endpoint for viewing and downloading -->
         <source src="{{ url_for('download_file', filename=filename) }}" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
+    
     <br>
-    <a href="{{ url_for('download_file', filename=filename) }}" download>Download Video</a>
+    
+    <a href="{{ url_for('download_file', filename=filename) }}">Download Video</a>
     <br><br>
-    <a href="{{ url_for('index') }}">Generate Another</a>
+    <a href="{{ url_for('index') }}">Create Another Video</a>
+
 </body>
 </html>
