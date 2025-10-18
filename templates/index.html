@@ -3,35 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SadTalker Web UI</title>
-    <!-- Link to the CSS file in the static/css folder -->
+    <title>Video Generator - SadTalker AI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>SadTalker - Make Your Image Talk</h1>
-        <form method="POST" enctype="multipart/form-data">
-            <label for="image">Upload Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
 
-            <label for="audio">Upload Audio:</label>
-            <input type="file" id="audio" name="audio" accept="audio/*" required>
+<div class="page-wrapper">
 
-            <div class="radio-container">
-                <label>Select resolution</label>
-                <div class="radio-group">
-                    <input type="radio" id="res256" name="res" value="256" checked>
-                    <label for="res256">256</label>
-                    <input type="radio" id="res512" name="res" value="512">
-                    <label for="res512">512</label>
+    <!-- ===== COLLAPSIBLE SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">AI Tools</h2>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="nav-link viola">Viola</a></li>
+                <li><a class="nav-link orchid active">Orchid</a></li>
+                <li><a href="#" class="nav-link lotus">Lotus</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="main-content-wrapper">
+        
+        <!-- Hamburger Menu Button -->
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">&#9776;</button>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="form-header">
+                    <h2>Video Generator</h2>
+                    <p>Upload a source image and an audio file to generate your talking head video.</p>
                 </div>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="grid">
+                        <!-- Required Files -->
+                        <div>
+                            <label for="source_image">Source Image (Required):</label>
+                            <div class="file-input-wrapper"><span class="btn-file-input">Choose File</span><span class="file-name">No file chosen</span><input type="file" id="source_image" name="source_image" accept="image/*" required></div>
+                        </div>
+                        <div>
+                            <label for="driven_audio">Driven Audio (Required):</label>
+                            <div class="file-input-wrapper"><span class="btn-file-input">Choose File</span><span class="file-name">No file chosen</span><input type="file" id="driven_audio" name="driven_audio" accept="audio/*" required></div>
+                        </div>
+                        <!-- ... (all your other form inputs are here) ... -->
+                        <!-- Preprocessing and Size -->
+                        <div>
+                            <label for="preprocess">Preprocess Mode:</label>
+                            <select id="preprocess" name="preprocess"><option value="crop">crop</option><option value="extcrop">extcrop</option><option value="resize">resize</option><option value="full">full</option><option value="extfull">extfull</option></select>
+                        </div>
+                        <div>
+                            <label for="size">Image Size:</label>
+                            <select id="size" name="size"><option value="256">256x256</option><option value="512">512x512</option></select>
+                        </div>
+                        <!-- Animation Settings -->
+                        <div>
+                            <label for="pose_style">Pose Style (0-45):</label>
+                            <input type="number" id="pose_style" name="pose_style" min="0" max="45" value="0">
+                        </div>
+                        <div>
+                            <label for="expression_scale">Expression Scale:</label>
+                            <input type="number" id="expression_scale" name="expression_scale" step="0.1" value="1.0">
+                        </div>
+                        <!-- Head Rotation -->
+                        <div class="full-width">
+                            <label>Head Rotation (enter space-separated numbers):</label>
+                            <div class="grid">
+                                <div><input type="text" id="input_yaw" name="input_yaw" placeholder="Yaw (e.g., 20 -10)"></div>
+                                <div><input type="text" id="input_pitch" name="input_pitch" placeholder="Pitch (e.g., -15 10)"></div>
+                                <div><input type="text" id="input_roll" name="input_roll" placeholder="Roll (e.g., 5 -5)"></div>
+                            </div>
+                        </div>
+                        <!-- Enhancers -->
+                        <div>
+                            <label for="enhancer">Face Enhancer:</label>
+                            <select id="enhancer" name="enhancer"><option value="None">None</option><option value="gfpgan" selected>gfpgan</option><option value="RestoreFormer">RestoreFormer</option></select>
+                        </div>
+                        <div>
+                            <label for="background_enhancer">Background Enhancer:</label>
+                            <select id="background_enhancer" name="background_enhancer"><option value="None">None</option><option value="realesrgan">realesrgan</option></select>
+                        </div>
+                        <!-- Flags/Checkboxes -->
+                        <div class="full-width checkbox-group">
+                            <label for="still"><input type="checkbox" id="still" name="still"> Still Mode <small>(for full body)</small></label>
+                            <!-- <label for="face3dvis"><input type="checkbox" id="face3dvis" name="face3dvis"> 3D Face Video</label> -->
+                            <label for="verbose"><input type="checkbox" id="verbose" name="verbose"> Verbose <small>(save temp files)</small></label>
+                            <label for="cpu"><input type="checkbox" id="cpu" name="cpu"> Use CPU <small>(slower)</small></label>
+                        </div>
+                    </div>
+                    <button type="submit">Generate Talking Video</button>
+                </form>
             </div>
+        </main>
 
-            <button type="submit">Generate Talking Video</button>
-        </form>
+        <footer class="page-footer">
+            <p>Powered by SyncTalker Technology</p>
+        </footer>
     </div>
-    <!-- Link to the JavaScript file in the static/js folder -->
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</div>
+
+<script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
 </body>
 </html>
-

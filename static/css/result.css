@@ -1,0 +1,58 @@
+/* Import all shared styles */
+@import url('main.css');
+
+/* --- Styles ONLY for the result.html page --- */
+
+.container {
+    max-width: 800px;
+    text-align: center;
+}
+
+h1 {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+video {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--border-dark);
+    background-color: var(--bg-dark-deep);
+    margin-bottom: 2rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    text-decoration: none;
+    color: white;
+    padding: 0.85rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s;
+    display: inline-block;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-download { background-color: var(--c-orchid); }
+.btn-download:hover { background-color: #7b2cbf; }
+.btn-back { background-color: var(--border-dark); }
+.btn-back:hover { background-color: #4a4e6e; }
+
+@media (max-width: 600px) {
+    .actions { flex-direction: column; align-items: center; }
+    .btn { width: 100%; max-width: 300px; }
+}
+@media (max-width: 992px) { .main-content-wrapper.shifted { margin-left: 0; } } /* Sidebar overlays content */

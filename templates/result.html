@@ -1,32 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Result</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-        video { border: 2px solid #ccc; border-radius: 8px; max-width: 90%; }
-        a { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-    </style>
+    <title>Your Video is Ready! - SadTalker AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
 </head>
 <body>
-    <h1>Your Talking Video is Ready!</h1>
-    
-    <!--
-      The URL is now simpler, using only the 'filename'.
-    -->
-    <video controls width="640">
-        <!-- We use the same 'download_file' endpoint for viewing and downloading -->
-        <source src="{{ url_for('download_file', filename=filename) }}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    
-    <br>
-    
-    <a href="{{ url_for('download_file', filename=filename) }}">Download Video</a>
-    <br><br>
-    <a href="{{ url_for('index') }}">Create Another Video</a>
 
+<div class="page-wrapper">
+
+    <!-- ===== COLLAPSIBLE SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">AI Tools</h2>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <li><a href="#" class="nav-link viola">Audio Generator</a></li>
+                <li><a href="{{ url_for('index') }}" class="nav-link orchid active">Video Generator</a></li>
+                <li><a href="#" class="nav-link lotus">Caption Adder</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="main-content-wrapper">
+
+        <!-- Hamburger Menu Button -->
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">&#9776;</button>
+
+        <main class="main-content">
+            <div class="container">
+                <h1>Your Video is Ready!</h1>
+                <video controls autoplay>
+                    <source src="{{ url_for('serve_output_file', filename=filename) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="actions">
+                    <a href="{{ url_for('serve_output_file', filename=filename) }}" class="btn btn-download" download>Download Video</a>
+                    <a href="{{ url_for('index') }}" class="btn btn-back">Create Another</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p>Powered by SyncTalker Technology</p>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
 </body>
 </html>

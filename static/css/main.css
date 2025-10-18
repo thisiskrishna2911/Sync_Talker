@@ -1,0 +1,159 @@
+/* --- Google Font & CSS Variables --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    --bg-dark-deep: #21222a;
+    --bg-dark-main: #24263A;
+    --bg-dark-field: #2C2F46;
+    --border-dark: #3A3E56;
+    --text-light: #E0E0E5;
+    --text-muted: #A3A3B0;
+    --text-accent: #8E8EA3;
+
+    /* Feature Theme Colors */
+    --c-viola: #8A2BE2;   /* Audio Generator */
+    --c-orchid: #9D4EDD;  /* Video Generator */
+    --c-lotus: #DA70D6;   /* Caption Adder */
+}
+
+/* --- Base Page Layout --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark-deep);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+.page-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Collapsible Sidebar --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-dark-main);
+    border-right: 1px solid var(--border-dark);
+    position: fixed;
+    top: 0;
+    left: -261px; /* Start hidden */
+    height: 100%;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    padding: 1.5rem 0;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+}
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--border-dark);
+    margin-bottom: 1.5rem;
+}
+.sidebar-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+    border-left: 4px solid transparent;
+}
+.nav-link:hover {
+    background-color: var(--bg-dark-field);
+    color: var(--text-light);
+}
+.nav-link::before { /* Colored dot */
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.nav-link.viola::before { background-color: var(--c-viola); }
+.nav-link.orchid::before { background-color: var(--c-orchid); }
+.nav-link.lotus::before { background-color: var(--c-lotus); }
+
+.nav-link.active {
+    color: var(--text-light);
+    background-color: var(--bg-dark-field);
+}
+.nav-link.active.orchid { border-left-color: var(--c-orchid); }
+/* Add .active.viola etc. for other pages */
+
+/* --- Main Content Wrapper --- */
+.main-content-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 0; /* Default state */
+}
+.main-content-wrapper.shifted {
+    margin-left: 261px;
+}
+
+/* --- Sidebar Toggle Button (Hamburger) --- */
+.sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    background: var(--bg-dark-main);
+    border: 1px solid var(--border-dark);
+    color: var(--text-light);
+    border-radius: 6px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.2s;
+}
+.sidebar-toggle:hover {
+    background: var(--bg-dark-field);
+    border-color: var(--c-orchid);
+}
+
+/* --- Shared Container & Footer --- */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+.container {
+    background-color: var(--bg-dark-main);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+.page-footer {
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: var(--text-accent);
+    font-size: 0.9rem;
+}
+.page-footer p { margin: 0; }

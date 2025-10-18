@@ -12,6 +12,10 @@ from src.generate_batch import get_data
 from src.generate_facerender_batch import get_facerender_data
 from src.utils.init_path import init_path
 
+
+import logging
+logger = logging.getLogger(__name__)
+
 def main(args):
     #torch.backends.cudnn.enabled = False
 
