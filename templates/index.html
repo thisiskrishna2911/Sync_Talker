@@ -17,7 +17,7 @@
         </div>
         <nav>
             <ul class="sidebar-nav">
-                <li><a href="#" class="nav-link viola">Viola</a></li>
+                <li><a href="audio#" class="nav-link viola">Viola</a></li>
                 <li><a class="nav-link orchid active">Orchid</a></li>
                 <li><a href="#" class="nav-link lotus">Lotus</a></li>
             </ul>
@@ -44,9 +44,26 @@
                             <label for="source_image">Source Image (Required):</label>
                             <div class="file-input-wrapper"><span class="btn-file-input">Choose File</span><span class="file-name">No file chosen</span><input type="file" id="source_image" name="source_image" accept="image/*" required></div>
                         </div>
+                        
                         <div>
                             <label for="driven_audio">Driven Audio (Required):</label>
-                            <div class="file-input-wrapper"><span class="btn-file-input">Choose File</span><span class="file-name">No file chosen</span><input type="file" id="driven_audio" name="driven_audio" accept="audio/*" required></div>
+                            
+                            <!-- Jinja2 IF statement to check if an audio_filename was passed -->
+                            {% if audio_filename %}
+                                <div class="selected-audio">
+                                    <p>Using: <strong>{{ audio_filename }}</strong></p>
+                                    <!-- This hidden input sends the filename back to the server -->
+                                    <input type="hidden" name="generated_audio_filename" value="{{ audio_filename }}">
+                                    <a href="{{ url_for('index') }}" class="change-audio-link">Upload a different audio file</a>
+                                </div>
+                            {% else %}
+                                <!-- If no filename is passed, show the normal file upload button -->
+                                <div class="file-input-wrapper">
+                                    <span class="btn-file-input">Choose File</span>
+                                    <span class="file-name">No file chosen</span>
+                                    <input type="file" id="driven_audio" name="driven_audio" accept="audio/*" required>
+                                </div>
+                            {% endif %}
                         </div>
                         <!-- ... (all your other form inputs are here) ... -->
                         <!-- Preprocessing and Size -->

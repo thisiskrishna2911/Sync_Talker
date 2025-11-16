@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Generator - Viola AI</title>
+    <!-- Links to your existing CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- ===== COLLAPSIBLE SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">AI Tools</h2>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <!-- Set the active page here -->
+                <li><a href="{{ url_for('audio') }}" class="nav-link viola active">Viola</a></li>
+                <li><a href="{{ url_for('index') }}" class="nav-link orchid">Orchid</a></li>
+                <li><a href="#" class="nav-link lotus">Lotus</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="main-content-wrapper">
+        
+        <!-- Hamburger Menu Button -->
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">&#9776;</button>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="form-header">
+                    <!-- Updated header to match the 'Viola' theme color -->
+                    <h2 class="viola">Audio Generator</h2>
+                    <p>Upload a reference audio and text to generate your custom voice clone.</p>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('audio') }}">
+                    <div class="grid">
+                        
+                        <!-- Reference Audio Input -->
+                        <div class="full-width">
+                            <label for="driven_audio">Reference Audio (Required):</label>
+                            <div class="file-input-wrapper">
+                                <span class="btn-file-input">Choose File</span>
+                                <span class="file-name">No file chosen</span>
+                                <input type="file" id="driven_audio" name="driven_audio" accept="audio/*" required>
+                            </div>
+                        </div>
+
+                        <!-- Text Input -->
+                        <div class="full-width">
+                            <label for="input_text">Text to Speak (Required):</label>
+                            <textarea id="input_text" name="input_text" rows="5" placeholder="Enter the text you want the cloned voice to say..." required></textarea>
+                        </div>
+                    </div>
+                    <button type="submit">Generate Audio</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p>Powered by Viola AI Technology</p>
+        </footer>
+    </div>
+</div>
+
+<!-- Links to your JS files -->
+<script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+</body>
+</html>

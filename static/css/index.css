@@ -1,7 +1,7 @@
 /* Import all shared styles */
 @import url("main.css");
 
-/* --- Styles ONLY for the index.html form --- */
+/* --- Styles ONLY for the form pages --- */
 
 .container {
     max-width: 850px;
@@ -12,11 +12,15 @@
     margin-bottom: 2rem;
 }
 .form-header h2 {
-    color: var(--c-orchid);
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
 }
+/* Add color classes for each tool */
+.form-header h2.orchid { color: var(--c-orchid); }
+.form-header h2.viola { color: var(--c-viola); }
+.form-header h2.lotus { color: var(--c-lotus); }
+
 .form-header p {
     color: var(--text-muted);
     margin: 0;
@@ -33,9 +37,12 @@ label {
     display: block;
     margin-bottom: 0.5rem;
 }
+
+/* ADDED textarea to this rule */
 input[type="text"],
 input[type="number"],
-select {
+select,
+textarea {
     font-family: inherit;
     font-size: 1rem;
     border: 1px solid var(--border-dark);
@@ -46,11 +53,15 @@ select {
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.3s, background-color 0.3s;
+    resize: vertical; /* Allow vertical resize for textarea */
 }
+
+/* ADDED textarea:focus to this rule */
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
     outline: none;
-    border-color: var(--c-orchid);
+    border-color: var(--c-orchid); /* Consider changing this based on the page theme */
     background-color: #353854;
 }
 
@@ -135,7 +146,7 @@ small {
 }
 
 button[type="submit"] {
-    background-color: var(--c-orchid);
+    background-color: var(--c-orchid); /* This can be themed per page if desired */
     color: white;
     padding: 0.85rem 1rem;
     border: none;
@@ -156,6 +167,27 @@ button[type="submit"]:disabled {
     transform: none;
 }
 
+/* Add to the bottom of static/css/index.css */
+.selected-audio {
+    background-color: var(--bg-dark-field);
+    border: 1px solid var(--border-dark);
+    padding: 0.75rem;
+    border-radius: 6px;
+    text-align: center;
+}
+.selected-audio p {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-light);
+}
+.change-audio-link {
+    font-size: 0.85rem;
+    color: var(--c-orchid);
+    text-decoration: none;
+}
+.change-audio-link:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
@@ -165,4 +197,4 @@ button[type="submit"]:disabled {
     .main-content-wrapper.shifted {
         margin-left: 0;
     }
-} /* On smaller screens, sidebar overlays content */
+}

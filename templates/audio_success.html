@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Generated! - Viola AI</title>
+    <!-- Use the same result.css for a consistent look -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- ===== COLLAPSIBLE SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">AI Tools</h2>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <!-- Highlight Viola as active -->
+                <li><a href="{{ url_for('audio') }}" class="nav-link viola active">viola</a></li>
+                <li><a href="{{ url_for('index') }}" class="nav-link orchid">orchid</a></li>
+                <li><a href="#" class="nav-link lotus">Lotus</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="main-content-wrapper">
+
+        <!-- Hamburger Menu Button -->
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">&#9776;</button>
+
+        <main class="main-content">
+            <div class="container">
+                <h1>Audio Generated Successfully!</h1>
+                
+                <!-- Audio Preview Player -->
+                <audio controls>
+                    <source src="{{ url_for('serve_output_file', filename=filename) }}" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+
+                <h2>What's next?</h2>
+                
+                <div class="actions">
+                    <!-- Option 1: Use this audio for the video generator -->
+                    <a href="{{ url_for('index', audio_filename=filename) }}" class="btn btn-download">Use This Audio for Video</a>
+                    
+                    <!-- Option 2: Go to the results page to download -->
+                    <a href="{{ url_for('result', filename=filename) }}" class="btn btn-back">Preview & Download</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p>Powered by Viola AI Technology</p>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
+</body>
+</html>
