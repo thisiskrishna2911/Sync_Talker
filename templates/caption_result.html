@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Video is Ready! - SadTalker AI</title>
+    <title>Your Captioned Video is Ready!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
 </head>
 <body>
@@ -18,8 +18,8 @@
         <nav>
             <ul class="sidebar-nav">
                 <li><a href="audio#" class="nav-link viola">Audio generator</a></li>
-                <li><a href="   #" class="nav-link orchid">Video generator</a></li>
-                <li><a href="caption#" class="nav-link lotus">Caption generator</a></li>
+                <li><a href="index#" class="nav-link orchid">Video generator</a></li>
+                <li><a href="#" class="nav-link lotus">Caption generator</a></li>
             </ul>
         </nav>
     </aside>
@@ -32,14 +32,14 @@
 
         <main class="main-content">
             <div class="container">
-                <h1>Your Video is Ready!</h1>
+                <h1>Your Captioned Video is Ready!</h1>
                 <video controls autoplay>
                     <source src="{{ url_for('serve_output_file', filename=filename) }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 <div class="actions">
                     <a href="{{ url_for('serve_output_file', filename=filename) }}" class="btn btn-download" download>Download Video</a>
-                    <a href="{{ url_for('index') }}" class="btn btn-back">Create Another</a>
+                    <a href="{{ url_for('caption') }}" class="btn btn-back">Create Another</a>
                 </div>
             </div>
         </main>

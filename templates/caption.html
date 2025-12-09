@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caption Video Generator - Karaoke AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- ===== COLLAPSIBLE SIDEBAR ===== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">AI Tools</h2>
+        </div>
+        <nav>
+            <ul class="sidebar-nav">
+                <li><a href="audio#" class="nav-link viola">Audio generator</a></li>
+                <li><a href="index#" class="nav-link orchid">Video generator</a></li>
+                <li><a href="#" class="nav-link lotus">Caption generator</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT WRAPPER ===== -->
+    <div class="main-content-wrapper">
+        
+        <!-- Hamburger Menu Button -->
+        <button class="sidebar-toggle" aria-label="Toggle Sidebar">&#9776;</button>
+
+        <main class="main-content">
+            <div class="container">
+                <div class="form-header">
+                    <h2>Caption Video Generator</h2>
+                    <p>Upload a video file and generate a side-by-side captioned karaoke video.</p>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="grid">
+                        <!-- Required Video Input -->
+                        <div class="full-width">
+                            <label for="video_input">Input Video (Required):</label>
+                            <div class="file-input-wrapper">
+                                <span class="btn-file-input">Choose File</span>
+                                <span class="file-name">No file chosen</span>
+                                <input type="file" id="video_input" name="video_input" accept="video/*" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit">Generate Captioned Video</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <p>Powered by SyncTalker Technology</p>
+        </footer>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/sidebar.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+<script>
+// Simple file input name handler
+document.querySelectorAll('.file-input-wrapper input[type="file"]').forEach(function(input) {
+    input.addEventListener('change', function() {
+        var fileName = this.files && this.files.length > 0 ? this.files[0].name : 'No file chosen';
+        this.parentNode.querySelector('.file-name').textContent = fileName;
+    });
+});
+</script>
+</body>
+</html>

@@ -8,16 +8,17 @@ import uuid
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 app = Flask(__name__)
 
 # --- Configuration ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'uploads')
 app.config['OUTPUT_FOLDER'] = os.path.join(BASE_DIR, 'static', 'output')
-# Path to the directory containing clone_voice.py
-CLONE_VOICE_PATH = os.path.join(BASE_DIR, 'AudioMaker') 
+
+# Paths to script locations
+CLONE_VOICE_PATH = os.path.join(BASE_DIR, 'AudioMaker')
 SAD_TALKER_PATH = os.path.join(BASE_DIR, 'SadTalker')
+CAPTION_SCRIPT_PATH = os.path.join(BASE_DIR, 'Caption', 'gen_cap_og.py')
 
 # Create directories if they don't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -73,7 +74,6 @@ def index():
             "--result_dir", abs_result_dir,
         ]
         
-        # ... (The rest of your command building logic is identical) ...
         if ref_eyeblink_path: cmd.extend(["--ref_eyeblink", ref_eyeblink_path])
         if ref_pose_path: cmd.extend(["--ref_pose", ref_pose_path])
         cmd.extend(["--preprocess", request.form.get('preprocess', 'crop')])
@@ -150,12 +150,10 @@ def audio():
         except FileNotFoundError:
             return "Error: 'clone_voice.py' not found.", 500
 
-        # *** CHANGE HERE: Redirect to the new success page ***
         return redirect(url_for('audio_success', filename=output_filename))
 
     return render_template("audio.html")
 
-# *** NEW ROUTE HERE ***
 @app.route('/audio_success/<filename>')
 def audio_success(filename):
     """Renders a page with options after audio is successfully generated."""
@@ -170,6 +168,50 @@ def result(filename):
 def serve_output_file(filename):
     """Serves the generated video or audio file."""
     return send_from_directory(app.config['OUTPUT_FOLDER'], filename)
+
+# --- Caption Maker Route ---
+@app.route('/caption', methods=['GET', 'POST'])
+def caption():
+    """
+    Route to generate and serve a video with side-by-side captions using 'Caption/gen_cap_og.py'.
+    Expects a video file upload from the user.
+    """
+    if request.method == 'POST':
+        video_file = request.files.get('video_input')
+        if not video_file:
+            return "Please upload a video file for captioning.", 400
+        video_path = save_file(video_file)
+
+        output_filename = f"{uuid.uuid4()}_karaoke.mp4"
+        output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
+
+        # Set the path to ImageMagick executable; adjust as needed for your environment
+        imagemagick_path = request.form.get('imagemagick_path', r"D:\Installations\ImageMagick-7.1.2-Q16-HDRI\magick.exe")
+
+        python_executable = "D:\\Installations\\Anaconda\\envs\\sad\\python.exe"
+
+        cmd = [
+            python_executable, CAPTION_SCRIPT_PATH,
+            video_path,
+            "-o", output_path,
+            "--imagemagick", imagemagick_path
+        ]
+        try:
+            print("Running caption command:", " ".join(map(str, cmd)))
+            subprocess.run(cmd, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error running caption generation: {e}")
+            return "An error occurred while generating captions.", 500
+        except FileNotFoundError:
+            return "Error: Caption maker file not found.", 500
+        
+        return redirect(url_for('caption_result', filename=output_filename))
+    return render_template('caption.html')
+    
+@app.route('/caption_result/<filename>')
+def caption_result(filename):
+    """Render the result page for the generated captioned video."""
+    return render_template('caption_result.html', filename=filename)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
